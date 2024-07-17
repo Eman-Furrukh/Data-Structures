@@ -1,0 +1,76 @@
+#pragma once
+#include<iostream>
+using namespace std;
+class Node
+{
+public:
+	Node* left;
+	Node* right;
+	int value;
+	Node()
+	{
+		left = NULL;
+		right = NULL;
+		value = 0;
+	}
+	Node(int num)
+	{
+		left = NULL;
+		right = NULL;
+		value = num;
+	}
+
+
+};
+int height(Node* node) {
+	if (node == nullptr) {
+		return 0;
+	}
+
+	int leftHeight = height(node->left);
+	int rightHeight = height(node->right);
+
+	return std::max(leftHeight, rightHeight) + 1;
+}
+
+bool is_balanced(Node* root) {
+	if (root == nullptr) {
+		return true;
+	}
+
+	int leftHeight = height(root->left);
+	int rightHeight = height(root->right);
+
+	if ((leftHeight - rightHeight <= 1 && leftHeight - rightHeight >= -1) && is_balanced(root->left) && is_balanced(root->right)) {
+		return true;
+	}
+
+	return false;
+}
+Node* createNode(int value) {
+	Node* node = new Node(value);
+	return node;
+}
+
+void inOrderTraversal(Node* root)
+{
+	Node* node = root;
+	if (node != nullptr) {
+		inOrderTraversal(node->left);
+		cout << node->value << " ";
+		inOrderTraversal(node->right);
+	}
+}
+
+void Mirror(Node* node) {
+	if (node == nullptr) {
+		return;
+	}
+	else
+	{
+		std::swap(node->left, node->right);
+		Mirror(node->left);
+		cout << node->value << " ";
+		Mirror(node->right);
+	}
+}
